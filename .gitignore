@@ -12,3 +12,11 @@
 .docker/
 .env
 .env.*
+# secrets
+.ssh/
+*.pem
+*.key
+id_*
+*.env
+bash_history
+.bash_history
