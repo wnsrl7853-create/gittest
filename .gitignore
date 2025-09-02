@@ -1,0 +1,14 @@
+# secrets
+.ssh/
+.bash_history
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+*.der
+*.kube/
+.docker/
+.env
+.env.*
