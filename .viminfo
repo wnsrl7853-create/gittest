@@ -14,12 +14,12 @@
 $
 
 # Command Line History (newest to oldest):
+:q!
+|2,0,1756822718,,"q!"
 :wq
-|2,0,1756794852,,"wq"
+|2,0,1756821880,,"wq"
 :ㅈㅂ
 |2,0,1756794826,,"ㅈㅂ"
-:q!
-|2,0,1756794783,,"q!"
 :Wq
 |2,0,1756717508,,"Wq"
 :q
@@ -34,7 +34,62 @@ $
 # Debug Line History (newest to oldest):
 
 # Registers:
-"1	LINE	0
+""1	LINE	0
+	name: Build & Push static-web to GHCR
+	
+	on:
+	  push:
+	    branches: [ main ]
+	    # static-web이 바뀔 때만 트리거 (워크플로 수정도 허용)
+	    paths:
+	      - 'static-web/**'
+	      - '.github/workflows/static-web-ghcr.yml'
+	    # 버전 파일만 바뀐 커밋으로 재트리거되는 것 방지
+	    paths-ignore:
+	      - 'static-web/VERSION'
+	  workflow_dispatch:
+	
+	jobs:
+	  build:
+	    runs-on: ubuntu-latest
+	    permissions:
+	      contents: write   # 버전 커밋/태그 푸시
+	      packages: write   # GHCR 푸시
+	
+	    steps:
+	      - name: Checkout
+	        uses: actions/checkout@v4
+	        with:
+	          fetch-depth: 0
+	
+	      # 오너명을 소문자로 (GHCR는 소문자 레포명 권장)
+	      - name: Prepare image name (lowercase owner)
+	        id: img
+	        run: |
+	          echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+	          echo "image=ghcr.io/$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/static-web" >> $GITHUB_OUTPUT
+	
+	      # 패치버전 +1
+	      - name: Bump patch version
+	        id: bump
+	        shell: bash
+	        run: |
+	          FILE="static-web/VERSION"
+	          [[ -f "$FILE" ]] || echo "1.0.0" > "$FILE"
+	          CUR=$(tr -d 'v' < "$FILE")
+	          IFS='.' read -r MA MI PA <<< "$CUR"
+	          PA=$((PA+1))
+	          NEW="${MA}.${MI}.${PA}"
+	          echo "$NEW" > "$FILE"
+	          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+	
+	      # 버전 파일 커밋 + 태그 푸시 (버전 이력/롤백 편의)
+	      - name: Commit version and create git tag
+|3,1,1,1,50,0,1756821822,"name: Build & Push static-web to GHCR","","on:","  push:","    branches: [ main ]","    # static-web이 바뀔 때만 트리거 (워크플로 수정도 허용)","    paths:","      - 'static-web/**'","      - '.github/workflows/static-web-ghcr.yml'","    # 버전 파일만 바뀐 커밋으로 재트리거되는 것 방지","    paths-ignore:","      - 'static-web/VERSION'","  workflow_dispatch:","","jobs:","  build:",>28
+|<"    runs-on: ubuntu-latest","    permissions:","      contents: write   # 버전 커밋/태그 푸시","      packages: write   # GHCR 푸시","","    steps:","      - name: Checkout","        uses: actions/checkout@v4","        with:","          fetch-depth: 0","","      # 오너명을 소문자로 (GHCR는 소문자 레포명 권장)","      - name: Prepare image name (lowercase owner)","        id: img","        run: |",>114
+|<"          echo \"owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')\" >> $GITHUB_OUTPUT","          echo \"image=ghcr.io/$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/static-web\" >> $GITHUB_OUTPUT","","      # 패치버전 +1","      - name: Bump patch version","        id: bump","        shell: bash","        run: |","          FILE=\"static-web/VERSION\"","          [[ -f \"$FILE\" ]] || echo \"1.0.0\" > \"$FILE\"",>40
+|<"          CUR=$(tr -d 'v' < \"$FILE\")","          IFS='.' read -r MA MI PA <<< \"$CUR\"","          PA=$((PA+1))","          NEW=\"${MA}.${MI}.${PA}\"","          echo \"$NEW\" > \"$FILE\"","          echo \"new=$NEW\" >> \"$GITHUB_OUTPUT\"","","      # 버전 파일 커밋 + 태그 푸시 (버전 이력/롤백 편의)","      - name: Commit version and create git tag"
+"2	LINE	0
 	[Unit]
 	Description=Auto commit & push on file change
 	After=network-online.target
@@ -51,248 +106,260 @@ $
 	
 	[Install]
 	WantedBy=multi-user.target
-|3,0,1,1,16,0,1756712782,"[Unit]","Description=Auto commit & push on file change","After=network-online.target","Wants=network-online.target","","[Service]","Type=simple","User=%i","Environment=REPO_DIR=/home/%i/gittest","Environment=BRANCH=main","ExecStart=/usr/local/bin/git-autopush.sh","Restart=always","RestartSec=3","","[Install]","WantedBy=multi-user.target"
-""-	CHAR	0
+|3,0,2,1,16,0,1756712782,"[Unit]","Description=Auto commit & push on file change","After=network-online.target","Wants=network-online.target","","[Service]","Type=simple","User=%i","Environment=REPO_DIR=/home/%i/gittest","Environment=BRANCH=main","ExecStart=/usr/local/bin/git-autopush.sh","Restart=always","RestartSec=3","","[Install]","WantedBy=multi-user.target"
+"-	CHAR	0
 	정
-|3,1,36,0,1,0,1756712794,"정"
+|3,0,36,0,1,0,1756712794,"정"
 
 # File marks:
-'0  9  62  ~/static-web/index.html
-|4,48,9,62,1756794852,"~/static-web/index.html"
-'1  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,49,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
-'2  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,50,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
-'3  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,51,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
-'4  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,52,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
-'5  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,53,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
-'6  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,54,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
-'7  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,55,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
-'8  1  0  /etc/nginx/nginx.conf
-|4,56,1,0,1756774532,"/etc/nginx/nginx.conf"
-'9  4  0  ~/static-web/Dockerfile
-|4,57,4,0,1756774465,"~/static-web/Dockerfile"
+'0  1  0  ~/.git/MERGE_MSG
+|4,48,1,0,1756822718,"~/.git/MERGE_MSG"
+'1  9  26  ~/static-web/index.html
+|4,49,9,26,1756821906,"~/static-web/index.html"
+'2  9  26  ~/static-web/index.html
+|4,50,9,26,1756821880,"~/static-web/index.html"
+'3  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,51,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+'4  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,52,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+'5  9  62  ~/static-web/index.html
+|4,53,9,62,1756794852,"~/static-web/index.html"
+'6  9  62  ~/static-web/index.html
+|4,54,9,62,1756794852,"~/static-web/index.html"
+'7  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,55,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+'8  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,56,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+'9  84  0  ~/.github/workflows/ci-ghcr.yml
+|4,57,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
 
 # Jumplist (newest first):
+-'  1  0  ~/.git/MERGE_MSG
+|4,39,1,0,1756822718,"~/.git/MERGE_MSG"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821906,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821906,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821880,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821880,"~/static-web/index.html"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  9  62  ~/static-web/index.html
 |4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  9  62  ~/static-web/index.html
+|4,39,9,62,1756794852,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
+-'  12  0  ~/static-web/index.html
+|4,39,12,0,1756794801,"~/static-web/index.html"
 -'  12  0  ~/static-web/index.html
 |4,39,12,0,1756794801,"~/static-web/index.html"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
 |4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
 |4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
--'  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
--'  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
--'  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794296,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794296,"~/.github/workflows/ci-ghcr.yml"
--'  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  85  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,85,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
--'  2  23  ~/.github/workflows/ci-ghcr.yml
-|4,39,2,23,1756794267,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794182,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794182,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  1  0  /etc/nginx/nginx.conf
-|4,39,1,0,1756774532,"/etc/nginx/nginx.conf"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  4  0  ~/static-web/Dockerfile
-|4,39,4,0,1756774465,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
--'  1  0  ~/static-web/Dockerfile
-|4,39,1,0,1756774443,"~/static-web/Dockerfile"
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+-'  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 
 # History of marks within files (newest to oldest):
 
+> ~/.git/MERGE_MSG
+	*	1756822714	0
+	"	1	0
+
 > ~/static-web/index.html
-	*	1756794828	0
-	"	9	62
-	^	9	65
-	.	9	62
+	*	1756821905	0
+	"	9	26
+	^	9	29
+	.	9	29
 	+	11	7
-	+	9	62
+	+	9	29
+
+> ~/.github/workflows/static-web-ghcr.yml
+	*	1756821827	0
+	"	64	0
+	^	64	0
+	.	63	92
+	+	1	37
+	+	63	92
 
 > ~/.github/workflows/ci-ghcr.yml
-	*	1756794782	0
-	"	1	0
+	*	1756821053	0
+	"	40	0
 	^	84	0
 	.	83	99
 	+	85	23
