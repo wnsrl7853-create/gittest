@@ -1,8 +1,0 @@
-name: CI hello
-on: [push, workflow_dispatch]
-jobs:
-  hello:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: echo "Hello from GitHub-hosted runner $(date)"
