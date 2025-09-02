@@ -1,0 +1,83 @@
+name: Build & Push static-web to GHCR
+
+on:
+  push:
+    branches: [ main ]
+    # static-web이 바뀔 때만 트리거 (워크플로 수정도 허용)
+    paths:
+      - 'static-web/**'
+      - '.github/workflows/static-web-ghcr.yml'
+    # 버전 파일만 바뀐 커밋으로 재트리거되는 것 방지
+    paths-ignore:
+      - 'static-web/VERSION'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 버전 커밋/태그 푸시
+      packages: write   # GHCR 푸시
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 오너명을 소문자로 (GHCR는 소문자 레포명 권장)
+      - name: Prepare image name (lowercase owner)
+        id: img
+        run: |
+          echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "image=ghcr.io/$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/static-web" >> $GITHUB_OUTPUT
+
+      # 패치버전 +1
+      - name: Bump patch version
+        id: bump
+        shell: bash
+        run: |
+          FILE="static-web/VERSION"
+          [[ -f "$FILE" ]] || echo "1.0.0" > "$FILE"
+          CUR=$(tr -d 'v' < "$FILE")
+          IFS='.' read -r MA MI PA <<< "$CUR"
+          PA=$((PA+1))
+          NEW="${MA}.${MI}.${PA}"
+          echo "$NEW" > "$FILE"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+
+      # 버전 파일 커밋 + 태그 푸시 (버전 이력/롤백 편의)
+      - name: Commit version and create git tag
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static-web/VERSION
+          git commit -m "chore(static-web): bump version to ${{ steps.bump.outputs.new }}" || echo "no changes to commit"
+          # static-web 전용 태그로 구분
+          git tag -a "static-web-v${{ steps.bump.outputs.new }}" -m "static-web ${{ steps.bump.outputs.new }}" || echo "tag exists"
+          git push --follow-tags
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./static-web
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ${{ steps.img.outputs.image }}:latest
+            ${{ steps.img.outputs.image }}:v${{ steps.bump.outputs.new }}
+          labels: |
+            org.opencontainers.image.version=${{ steps.bump.outputs.new }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
