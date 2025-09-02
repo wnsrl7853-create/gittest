@@ -1,0 +1,7 @@
+[user]
+	name = wnsrl7853
+	email = wnsrl7853@gmail.com
+[init]
+	defaultBranch = main
+[credential]
+	helper = store

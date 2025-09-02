@@ -1,0 +1,67 @@
+name: CI: Build • Test • Tag • Push to GHCR
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'static-web/**'
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/static-web
+
+jobs:
+  build-test-tag-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bump version tag
+        id: tag
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main
+          WITH_V: true
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker build (local test)
+        run: |
+          docker build -t app:${{ steps.tag.outputs.new_tag }} static-web
+
+      - name: Smoke test
+        run: |
+          docker run -d --name web -p 8080:80 app:${{ steps.tag.outputs.new_tag }}
+          for i in {1..10}; do curl -fsS http://localhost:8080 && break || sleep 1; done
+          curl -fsS http://localhost:8080 | grep -i '<h1'
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ steps.tag.outputs.new_tag }}
+            type=raw,value=latest
+
+      - name: Build & Push to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: ./static-web
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
