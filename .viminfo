@@ -15,7 +15,7 @@ $
 
 # Command Line History (newest to oldest):
 :q!
-|2,0,1756822718,,"q!"
+|2,0,1756822722,,"q!"
 :wq
 |2,0,1756821880,,"wq"
 :ㅈㅂ
@@ -112,28 +112,32 @@ $
 |3,0,36,0,1,0,1756712794,"정"
 
 # File marks:
-'0  1  0  ~/.git/MERGE_MSG
-|4,48,1,0,1756822718,"~/.git/MERGE_MSG"
-'1  9  26  ~/static-web/index.html
-|4,49,9,26,1756821906,"~/static-web/index.html"
+'0  1  0  ~/.git/COMMIT_EDITMSG
+|4,48,1,0,1756822722,"~/.git/COMMIT_EDITMSG"
+'1  1  0  ~/.git/MERGE_MSG
+|4,49,1,0,1756822718,"~/.git/MERGE_MSG"
 '2  9  26  ~/static-web/index.html
-|4,50,9,26,1756821880,"~/static-web/index.html"
-'3  64  0  ~/.github/workflows/static-web-ghcr.yml
-|4,51,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
-'4  40  0  ~/.github/workflows/ci-ghcr.yml
-|4,52,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
-'5  9  62  ~/static-web/index.html
-|4,53,9,62,1756794852,"~/static-web/index.html"
+|4,50,9,26,1756821906,"~/static-web/index.html"
+'3  9  26  ~/static-web/index.html
+|4,51,9,26,1756821880,"~/static-web/index.html"
+'4  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,52,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+'5  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,53,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
 '6  9  62  ~/static-web/index.html
 |4,54,9,62,1756794852,"~/static-web/index.html"
-'7  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,55,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+'7  9  62  ~/static-web/index.html
+|4,55,9,62,1756794852,"~/static-web/index.html"
 '8  1  0  ~/.github/workflows/ci-ghcr.yml
 |4,56,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
-'9  84  0  ~/.github/workflows/ci-ghcr.yml
-|4,57,84,0,1756794316,"~/.github/workflows/ci-ghcr.yml"
+'9  1  0  ~/.github/workflows/ci-ghcr.yml
+|4,57,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
 
 # Jumplist (newest first):
+-'  1  0  ~/.git/COMMIT_EDITMSG
+|4,39,1,0,1756822722,"~/.git/COMMIT_EDITMSG"
+-'  1  0  ~/.git/MERGE_MSG
+|4,39,1,0,1756822718,"~/.git/MERGE_MSG"
 -'  1  0  ~/.git/MERGE_MSG
 |4,39,1,0,1756822718,"~/.git/MERGE_MSG"
 -'  9  26  ~/static-web/index.html
@@ -141,6 +145,14 @@ $
 -'  9  26  ~/static-web/index.html
 |4,39,9,26,1756821906,"~/static-web/index.html"
 -'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821906,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821906,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821880,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
+|4,39,9,26,1756821880,"~/static-web/index.html"
+-'  9  26  ~/static-web/index.html
 |4,39,9,26,1756821880,"~/static-web/index.html"
 -'  9  26  ~/static-web/index.html
 |4,39,9,26,1756821880,"~/static-web/index.html"
@@ -160,6 +172,38 @@ $
 |4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
 -'  64  0  ~/.github/workflows/static-web-ghcr.yml
 |4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  64  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,64,0,1756821828,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
+-'  1  0  ~/.github/workflows/static-web-ghcr.yml
+|4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
 -'  1  0  ~/.github/workflows/static-web-ghcr.yml
 |4,39,1,0,1756821820,"~/.github/workflows/static-web-ghcr.yml"
 -'  1  0  ~/.github/workflows/static-web-ghcr.yml
@@ -208,6 +252,38 @@ $
 |4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
 -'  40  0  ~/.github/workflows/ci-ghcr.yml
 |4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
+-'  40  0  ~/.github/workflows/ci-ghcr.yml
+|4,39,40,0,1756821054,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
 |4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
@@ -240,102 +316,30 @@ $
 |4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
 |4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  9  62  ~/static-web/index.html
-|4,39,9,62,1756794852,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
--'  12  0  ~/static-web/index.html
-|4,39,12,0,1756794801,"~/static-web/index.html"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 -'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
--'  1  0  ~/.github/workflows/ci-ghcr.yml
-|4,39,1,0,1756794783,"~/.github/workflows/ci-ghcr.yml"
+|4,39,1,0,1756820932,"~/.github/workflows/ci-ghcr.yml"
 
 # History of marks within files (newest to oldest):
+
+> ~/.git/COMMIT_EDITMSG
+	*	1756822718	0
+	"	1	0
 
 > ~/.git/MERGE_MSG
 	*	1756822714	0
